@@ -80,5 +80,9 @@ work we had to do above.)
 
 # Reports
 
-    select * from rewards;
+    SELECT *
+    FROM rewards
+    WHERE date >= '2023-01-01'
+    AND date <= '2023-12-31'
+    ORDER BY date;
 
