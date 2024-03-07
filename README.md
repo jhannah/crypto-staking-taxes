@@ -75,14 +75,31 @@ Settings > Operation history > Save
 (Unfortunately this is blank for ADA and stETH. sigh. If it wasn't, we could throw away all the
 work we had to do above.)
 
-    .import --csv rewards_MYADDR_usd_cointracking.csv raw_steth
+    .import --csv ledgerlive-operations-2024.03.06.csv raw_xtz
 
+    INSERT INTO rewards
+    SELECT
+        substr("Operation Date", 1, 10),
+        "Currency Ticker",
+        "Operation Amount" - "Operation Fees",
+        "Countervalue at Operation Date"
+    FROM raw_xtz
+    WHERE "Currency Ticker" = 'XTZ';
 
 # Reports
+
+Total rewards for the year per coin:
+
+    SELECT coin, sum(qty), sum(usd_value)
+    FROM rewards
+    WHERE date >= '2023-01-01'
+    AND date <= '2023-12-31'
+    GROUP by 1;
+
+Every reward event:
 
     SELECT *
     FROM rewards
     WHERE date >= '2023-01-01'
     AND date <= '2023-12-31'
     ORDER BY date;
-
