@@ -31,7 +31,7 @@ Pooltool.io used to export USD (or whatever currency) values at time of each rew
 That was nice. It's currently broken, so we have to cross-reference to a historical dump
 of daily ADA/USD prices.
 
-https://pooltool.io/address/[YOUR ADA WALLET ADDRESS]
+    https://pooltool.io/address/[YOUR ADA WALLET ADDRESS]
 
 Scroll to the bottom, use their "Export Tool" to download a CSV.
 
@@ -44,7 +44,7 @@ https://www.cryptodatadownload.com/cdd/Bitstamp_ADAUSD_d.csv
 
     .import --csv --skip 1 Bitstamp_ADAUSD_d.csv ada_usd
 
-Now we can create out rewards data:
+Now we can create our rewards data:
 
     INSERT INTO rewards
     SELECT substr(raw_ada.Date, 1, 10), 'ADA', Buy, close * Buy
@@ -56,7 +56,7 @@ Now we can create out rewards data:
 Lido runs a website that works great. You can export your reward history, complete with USD
 values at time of each reward:
 
-https://stake.lido.fi/rewards?address=[YOUR stETH WALLET ADDRESS]
+    https://stake.lido.fi/rewards?address=[YOUR stETH WALLET ADDRESS]
 
 Click "Export CSV".
 
