@@ -9,7 +9,7 @@ SQLite database so I can prep a CSV for my tax preparer.
 
 # Schema setup
 
-    sqlite3 rewards.sqlite
+    sqlite3 rewards.sqlite3
     CREATE TABLE rewards (
         date text,
         coin text,
@@ -35,7 +35,7 @@ of daily ADA/USD prices.
 
 Scroll to the bottom, use their "Export Tool" to download a CSV.
 
-    sqlite3 rewards.sqlite
+    $ sqlite3 rewards.sqlite3
     .import --csv rewards_MYADDR_usd_cointracking.csv raw_ada
 
 Now you've got your wallet data, yay. Load up daily historical ADA/USD data:
@@ -60,7 +60,11 @@ values at time of each reward:
 
 Click "Export CSV".
 
-    .import --csv "Lido Rewards.csv" raw_steth
+Ugh. That file contains `Wed Mar 06 2024` and we want `2024-03-06`. We'll use a little Perl script
+to do our insertion:
+
+    $ perl steth.pl
+    Inserted 545 rows into table rewards.
 
 ## XTZ (Tezos)
 
