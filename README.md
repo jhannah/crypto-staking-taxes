@@ -2,7 +2,7 @@ If you hold multiple crypto coins that grant staking rewards, filing your taxes
 in the USA is a massive pain in the butt. You can (and I have) thrown lots of money
 at crypto tax preparation software websites every year, just to find out that you still
 need to spend many hours trying to fix their data integrations / imports. All your
-efforts may or may generate usable results for the IRS.
+efforts may or may not generate usable results for the IRS.
 
 In this repository, I've given up on paying web sites every year, am rolling my own
 SQLite database so I can prep a CSV for my tax preparer.
