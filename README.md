@@ -9,13 +9,16 @@ SQLite database so I can prep a CSV for my tax preparer.
 
 # Schema setup
 
-    sqlite3 rewards.sqlite3
-    CREATE TABLE rewards (
-        date text,
-        coin text,
-        qty number,
-        usd_value number
-    );
+    $ sqlite3 rewards.sqlite3
+
+```sql
+CREATE TABLE rewards (
+    date text,
+    coin text,
+    qty number,
+    usd_value number
+);
+```
 
 # Coins
 
@@ -46,10 +49,12 @@ https://www.cryptodatadownload.com/cdd/Bitstamp_ADAUSD_d.csv
 
 Now we can create our rewards data:
 
-    INSERT INTO rewards
-    SELECT substr(raw_ada.Date, 1, 10), 'ADA', Buy, close * Buy
-    FROM raw_ada
-    JOIN ada_usd ON substr(raw_ada.Date, 1, 10) = substr(ada_usd.date, 1, 10);
+```sql
+INSERT INTO rewards
+SELECT substr(raw_ada.Date, 1, 10), 'ADA', Buy, close * Buy
+FROM raw_ada
+JOIN ada_usd ON substr(raw_ada.Date, 1, 10) = substr(ada_usd.date, 1, 10);
+```
 
 ## stETH (Lido staked Ethereum)
 
@@ -75,29 +80,35 @@ work we had to do above.)
     $ sqlite3 rewards.sqlite3
     .import --csv ledgerlive-operations-2025.03.31.csv raw_xtz
 
-    INSERT INTO rewards
-    SELECT
-        substr("Operation Date", 1, 10),
-        "Currency Ticker",
-        "Operation Amount" - "Operation Fees",
-        "Countervalue at Operation Date"
-    FROM raw_xtz
-    WHERE "Currency Ticker" = 'XTZ';
+```sql
+INSERT INTO rewards
+SELECT
+    substr("Operation Date", 1, 10),
+    "Currency Ticker",
+    "Operation Amount" - "Operation Fees",
+    "Countervalue at Operation Date"
+FROM raw_xtz
+WHERE "Currency Ticker" = 'XTZ';
+```
 
 # Reports
 
 Total rewards for the year per coin:
 
-    SELECT coin, sum(qty), round(sum(usd_value), 2)
-    FROM rewards
-    WHERE date >= '2024-01-01'
-    AND date <= '2024-12-31'
-    GROUP by 1;
+```sql
+SELECT coin, sum(qty), round(sum(usd_value), 2)
+FROM rewards
+WHERE date >= '2024-01-01'
+AND date <= '2024-12-31'
+GROUP by 1;
+```
 
 Every reward event:
 
-    SELECT *
-    FROM rewards
-    WHERE date >= '2024-01-01'
-    AND date <= '2024-12-31'
-    ORDER BY coin, date;
+```sql
+SELECT *
+FROM rewards
+WHERE date >= '2024-01-01'
+AND date <= '2024-12-31'
+ORDER BY coin, date;
+```
