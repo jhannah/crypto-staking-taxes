@@ -60,9 +60,6 @@ values at time of each reward:
 
 Click "Export CSV".
 
-Ugh. That file contains `Wed Mar 06 2024` and we want `2024-03-06`. We'll use a little Perl script
-to do our insertion:
-
     $ perl steth.pl
     Inserted 545 rows into table rewards.
 
@@ -70,12 +67,13 @@ to do our insertion:
 
 Ledger Live export works great. It tells us the USD value of rewards at the time of each reward.
 
-Settings > Operation history > Save
+Settings > Accounts > Operation history > Save
 
 (Unfortunately this is blank for ADA and stETH. sigh. If it wasn't, we could throw away all the
 work we had to do above.)
 
-    .import --csv ledgerlive-operations-2024.03.06.csv raw_xtz
+    $ sqlite3 rewards.sqlite3
+    .import --csv ledgerlive-operations-2025.03.31.csv raw_xtz
 
     INSERT INTO rewards
     SELECT
@@ -90,16 +88,16 @@ work we had to do above.)
 
 Total rewards for the year per coin:
 
-    SELECT coin, sum(qty), sum(usd_value)
+    SELECT coin, sum(qty), round(sum(usd_value), 2)
     FROM rewards
-    WHERE date >= '2023-01-01'
-    AND date <= '2023-12-31'
+    WHERE date >= '2024-01-01'
+    AND date <= '2024-12-31'
     GROUP by 1;
 
 Every reward event:
 
     SELECT *
     FROM rewards
-    WHERE date >= '2023-01-01'
-    AND date <= '2023-12-31'
-    ORDER BY date;
+    WHERE date >= '2024-01-01'
+    AND date <= '2024-12-31'
+    ORDER BY coin, date;
