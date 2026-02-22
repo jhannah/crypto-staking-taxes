@@ -39,7 +39,7 @@ of daily ADA/USD prices.
 Scroll to the bottom, use their "Export Tool" to download a CSV.
 
     $ sqlite3 rewards.sqlite3
-    .import --csv rewards_MYADDR_usd_cointracking.csv raw_ada
+    .import --csv ADA_rewards.csv raw_ada
 
 Now you've got your wallet data, yay. Load up daily historical ADA/USD data:
 
@@ -78,7 +78,7 @@ Settings > Accounts > Operation history > Save
 work we had to do above.)
 
     $ sqlite3 rewards.sqlite3
-    .import --csv ledgerlive-operations-2025.03.31.csv raw_xtz
+    .import --csv ledgerwallet-operations-2026.02.22.csv raw_xtz
 
 ```sql
 INSERT INTO rewards
@@ -98,8 +98,8 @@ Total rewards for the year per coin:
 ```sql
 SELECT coin, sum(qty), round(sum(usd_value), 2)
 FROM rewards
-WHERE date >= '2024-01-01'
-AND date <= '2024-12-31'
+WHERE date >= '2025-01-01'
+AND date <= '2025-12-31'
 GROUP by 1;
 ```
 
@@ -108,7 +108,7 @@ Every reward event:
 ```sql
 SELECT *
 FROM rewards
-WHERE date >= '2024-01-01'
-AND date <= '2024-12-31'
+WHERE date >= '2025-01-01'
+AND date <= '2025-12-31'
 ORDER BY coin, date;
 ```
