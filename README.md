@@ -43,8 +43,8 @@ Scroll to the bottom, use their "Export Tool" to download a CSV.
 
 Now you've got your wallet data, yay. Load up daily historical ADA/USD data:
 
-https://www.cryptodatadownload.com/cdd/Bitstamp_ADAUSD_d.csv
-
+    $ wget https://www.cryptodatadownload.com/cdd/Bitstamp_ADAUSD_d.csv
+    $ sqlite3 rewards.sqlite3
     .import --csv --skip 1 Bitstamp_ADAUSD_d.csv ada_usd
 
 Now we can create our rewards data:
