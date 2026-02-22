@@ -63,7 +63,7 @@ values at time of each reward:
 
     https://stake.lido.fi/rewards?address=[YOUR stETH WALLET ADDRESS]
 
-Click "Export CSV".
+Click "Export CSV". Then run the Perl program I wrote:
 
     $ perl steth.pl
     Inserted 545 rows into table rewards.
